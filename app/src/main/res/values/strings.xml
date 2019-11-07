@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Search API</string>
+
+    <string name="song_list_item_artist">Artist: </string>
+    <string name="song_list_item_album">Album: </string>
+    <string name="song_list_item_song">Song: </string>
+
+    <string name="general_error_connection">No Network Connection</string>
+</resources>
