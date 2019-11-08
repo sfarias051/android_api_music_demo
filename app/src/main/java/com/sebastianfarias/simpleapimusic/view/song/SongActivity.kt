@@ -13,7 +13,7 @@ import com.sebastianfarias.simpleapimusic.model.Result
 import com.sebastianfarias.simpleapimusic.utils.BaseActivity
 import com.sebastianfarias.simpleapimusic.utils.Constants
 import com.sebastianfarias.simpleapimusic.view.songdetail.SongDetailActivity
-import kotlinx.android.synthetic.main.song_list.swipe_refresh_list
+import kotlinx.android.synthetic.main.song_list.*
 
 class SongActivity : BaseActivity() {
 
@@ -41,21 +41,28 @@ class SongActivity : BaseActivity() {
             if(hasInternetConnection()) getSongList()
         }
 
-        songViewModel = ViewModelProviders.of(this,
-            SongViewModelFactory(
-                Constants.WS_PARAMETER_VALUE_TERM_DEFAULT,
-                Constants.WS_PARAMETER_VALUE_ENTITY
-            )
-        ).get(SongViewModel::class.java)
-        if(hasInternetConnection()) getSongList()
+        if (this.intent.hasExtra(Intent.EXTRA_TEXT))
+            searchSongViewModel(this.intent.getStringExtra(Intent.EXTRA_TEXT))
     }
 
     private fun getSongList() {
         swipe_refresh_list.isRefreshing = true
-        songViewModel.getSongList.observe(this, Observer {
-            recyclerAdapter.setAlbumListItems(it.body()?.results)
-            swipe_refresh_list.isRefreshing = false
-        })
+        recyclerAdapter.notifyDataSetChanged()
+        songViewModel.getSongList.observe(this,Observer {
+                recyclerAdapter.setAlbumListItems(it.body()?.results)
+                swipe_refresh_list.isRefreshing = false
+            }
+        )
+    }
+
+    private fun searchSongViewModel(search: String){
+        songViewModel = ViewModelProviders.of(this,
+            SongViewModelFactory(
+                search,
+                Constants.WS_PARAMETER_VALUE_ENTITY
+            )
+        ).get(SongViewModel::class.java)
+        if(hasInternetConnection()) getSongList()
     }
 
     private fun albumItemClicked(result : Result){
@@ -63,4 +70,5 @@ class SongActivity : BaseActivity() {
         songDetailActivityIntent.putExtra(Constants.KEY_SONG_OBJECT, result)
         startActivity(songDetailActivityIntent)
     }
+
 }

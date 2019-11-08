@@ -6,7 +6,7 @@ import android.os.Handler
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.sebastianfarias.simpleapimusic.R
-import com.sebastianfarias.simpleapimusic.view.song.SongActivity
+import com.sebastianfarias.simpleapimusic.view.search.SearchActivity
 import kotlinx.android.synthetic.main.splash_screen.*
 
 class SplashActivity : AppCompatActivity() {
@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
 
         handlerDelay = Handler()
         handlerDelay.postDelayed({
-            startActivity(Intent(applicationContext, SongActivity::class.java))
+            startActivity(Intent(applicationContext, SearchActivity::class.java))
             finish()
         }, time)
     }

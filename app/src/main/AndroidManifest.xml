@@ -27,6 +27,9 @@
         <activity
             android:name=".view.songdetail.SongDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.search.SearchActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
